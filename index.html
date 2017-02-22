@@ -6,7 +6,11 @@
   var config = {
     categories: [
       { name: "Learn", commands: [
-        { key: 'ub', name: 'Universitat de Barcelona', url: 'https://ub.edu', search: '/dyn/cms/continguts_ca/Resultats.html?q=' },
+        { key: 'w', name: 'Wikipedia', url: 'https://en.wikipedia.org', search: '/w/index.php?search=' },
+        { key: 'wa', name: 'WolframAlpha', url: 'https://www.wolframalpha.com', search: '/input/?i=' },
+      { key: 'rae', name: 'Real Academia Española', url: 'http://dle.rae.es', search: '/?w=' },
+      { key: 'wr', name: 'WordReference', url: 'http://www.wordreference.com', search: '/definition/' },
+        { key: 'ub', name: 'Universitat de Barcelona', url: 'https://www.ub.edu', search: '/dyn/cms/continguts_ca/Resultats.html?q=' },
         { key: 'gu', name: 'University of Gothenburg', url: 'https://gu.se/english', search: '/?siteSearch=true&searchText=' },
         { key: 'cth', name: 'Chalmers University of Technology', url: 'chalmers.se/en', search: '/search/Pages/default.aspx?q=' },
       ] },
@@ -20,9 +24,12 @@
       { name: "Social", commands: [
         { key: 'r', name: 'Reddit', url: 'https://www.reddit.com', search: '/search?q=' },
         { key: 'M', name: 'Menéame', url: 'https://www.meneame.net', search: '/search?q=' },
-        { key: 't', name: 'Twitter', url: 'https://twitter.com', search: '/search?q=' },
         { key: 'fb', name: 'FaceBook', url: 'https://www.facebook.com', search: '/' },
         { key: 'i', name: 'Instagram', url: 'https://www.instagram.com', search: '/' },
+      ] },
+      { name: "TV/Media", commands: [
+          { key: 'yt', name: 'YouTube', url: 'https://www.youtube.com', search: '/results?search_query=' },
+          { key: 'n', name: 'Netflix', url: 'https://www.netflix.com', search: '/search?q=' },
       ] },
       { name: "Download", commands: [
         { key: 'T', name: 'The Pirate Bay', url: 'https://thepiratebay.org', search: '/search/' },
