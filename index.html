@@ -11,10 +11,9 @@
       { key: 'rae', name: 'Real Academia Española', url: 'http://dle.rae.es', search: '/?w=' },
       { key: 'wr', name: 'WordReference', url: 'http://www.wordreference.com', search: '/definition/' },
         { key: 'ub', name: 'Universitat de Barcelona', url: 'https://www.ub.edu', search: '/dyn/cms/continguts_ca/Resultats.html?q=' },
-        { key: 'gu', name: 'University of Gothenburg', url: 'https://gu.se/english', search: '/?siteSearch=true&searchText=' },
-        { key: 'cth', name: 'Chalmers University of Technology', url: 'chalmers.se/en', search: '/search/Pages/default.aspx?q=' },
+        { key: 'gu', name: 'University of Gothenburg', url: 'https://gu.se/english', search: '/?siteSearch=true&searchText=', favicon: 'http://www.gu.se/digitalAssets/1479/1479536_goteborgsuniversitet_16px.ico' },
+        { key: 'cth', name: 'Chalmers University of Technology', url: 'https://chalmers.se/en', search: '/search/Pages/default.aspx?q=', favicon: 'http://www.chalmers.se/_layouts/Chalmers.Core.UI/Images/favicon.ico' },
       ] },
-
       { name: "dev", commands: [
         { key: 'gh', name: 'GitHub', url: 'https://github.com', search: '/search?q=' },
           { key: 'so', name: 'StackOverflow', url: 'http://stackoverflow.com', search: '/search?q=' },
@@ -279,7 +278,7 @@
 <main>
   <time id="js-clock"></time>
   <form id="js-search-form" autocomplete="off">
-    <input id="js-search-input" class="search-input" type="text" autofocus>
+    <input id="js-search-input" class="search-input" type="text" autofocus />
     <ul id="js-search-suggestions" class="search-suggestions"></ul>
   </form>
 </main>
