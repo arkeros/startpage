@@ -15,24 +15,33 @@
         { key: 'cth', name: 'Chalmers University of Technology', url: 'chalmers.se/en', search: '/search/Pages/default.aspx?q=' },
       ] },
 
-      { name: "Work", commands: [
+      { name: "dev", commands: [
         { key: 'gh', name: 'GitHub', url: 'https://github.com', search: '/search?q=' },
-        { key: 'd', name: 'Google Drive', url: 'https://drive.google.com', search: '/drive/u/0/search?q=' },
-        { key: 't', name: 'Translate', url: 'https://translate.google.com', search: '/#en/es/' },
-        { key: 'm', name: 'Google Maps', url: 'https://google.com/maps', search: '/search/' },
-      ] },
+          { key: 'so', name: 'StackOverflow', url: 'http://stackoverflow.com', search: '/search?q=' },
+          { key: 'jl', name: 'Julia', url: 'http://docs.julialang.org', search: '/en/stable/search/?q=', dash: '/en/stable/manual/', favicon: 'http://julialang.org/favicon.ico' },
+          { key: 'py', name: 'Python', url: 'https://docs.python.org', search: '/2/search.html?q=', dash: '/2/library/' },
+          { key: 'np', name: 'Numpy', url: 'http://numpy.readthedocs.io', search: '/en/latest/search.html?q=' },
+          { key: 'pd', name: 'pandas', url: 'http://pandas.pydata.org', search: '/pandas-docs/stable/search.html?q=' },
+          ] },
+
+        { name: "Google", commands: [
+            { key: 'g', name: 'Google', url: 'https://google.com', search: '/search?q=' },
+            { key: 'd', name: 'Google Drive', url: 'https://drive.google.com', search: '/drive/u/0/search?q=' },
+            { key: 't', name: 'Translate', url: 'https://translate.google.com', search: '/#en/es/' },
+            { key: 'm', name: 'Google Maps', url: 'https://google.com/maps', search: '/search/', favicon: 'https://www.google.com/images/branding/product/ico/maps_32dp.ico' },
+        ] },
       { name: "Social", commands: [
-        { key: 'r', name: 'Reddit', url: 'https://www.reddit.com', search: '/search?q=' },
+        { key: 'r', name: 'Reddit', url: 'https://www.reddit.com', search: '/search?q=', dash: '/r/' },
         { key: 'M', name: 'Menéame', url: 'https://www.meneame.net', search: '/search?q=' },
         { key: 'fb', name: 'FaceBook', url: 'https://www.facebook.com', search: '/' },
-        { key: 'i', name: 'Instagram', url: 'https://www.instagram.com', search: '/' },
+        { key: 'i', name: 'Instagram', url: 'https://www.instagram.com', search: '/', favicon: 'https://www.instagram.com/static/images/ico/favicon.ico/dfa85bb1fd63.ico' },
       ] },
       { name: "TV/Media", commands: [
           { key: 'yt', name: 'YouTube', url: 'https://www.youtube.com', search: '/results?search_query=' },
           { key: 'n', name: 'Netflix', url: 'https://www.netflix.com', search: '/search?q=' },
       ] },
       { name: "Download", commands: [
-        { key: 'T', name: 'The Pirate Bay', url: 'https://thepiratebay.org', search: '/search/' },
+        { key: 'T', name: 'The Pirate Bay', url: 'https://thepiratebay.se', search: '/search/' },
 
       ] },
     ],
@@ -42,10 +51,10 @@
 
     // the delimiter between the key and your search query.
     // e.g. to search GitHub for potatoes you'd type "g:potatoes".
-    searchDelimiter: ':',
+    searchDelimiter: '?',
 
     // the delimiter between the key and a path.
-    // e.g. type "r/r/unixporn" to go to "reddit.com/r/unixporn".
+    // e.g. type "r/unixporn" to go to "reddit.com/r/unixporn".
     pathDelimiter: '/',
 
     // set to true to instantly redirect when a key is matched.
@@ -53,13 +62,13 @@
     instantRedirect: false,
 
     // suggest your most popular queries as you type.
-    suggestions: false,
+    suggestions: true,
 
     // max amount of suggestions to display.
     suggestionsLimit: 4,
 
     // open queries in a new tab.
-    newTab: true,
+    newTab: false,
 
     // the delimiter between the hours and minutes in the clock.
     clockDelimiter: '&nbsp;',
@@ -127,6 +136,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     color: #fff;
+      text-align: center;
     font-family: 'Lato', sans-serif;
   }
 
@@ -250,6 +260,13 @@
     text-align: center;
   }
 
+  .command-favicon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+  }
+
   @media (min-width: 740px) {
     .overlay {
       display: flex;
@@ -303,10 +320,12 @@
       var commandItems = '';
 
       category.commands.forEach(function(command) {
+          var favicon = command.favicon || (command.url + '/favicon.ico');
         commandItems += (
           '<li class="command">' +
             '<a href="' + command.url + '">' +
               '<span class="command-key">' + command.key + '</span>' +
+              '<img class="command-favicon" src="' + favicon + '" />' +
               '<span class="command-name">' + command.name + '</span>' +
             '</a>' +
           '</li>'
@@ -360,13 +379,13 @@
 
       show: function(input) {
         searchSuggestions.innerHTML = '';
-        document.body.setAttribute('search-suggestions', false);
+        document.body.setAttribute('search-suggestions', true);
 
         if (!config.suggestions || !input) return false;
 
         queries
           .filter(function(query) {
-            var matchesQuery = query[0].indexOf(input) !== -1;
+            var matchesQuery = query[0].indexOf(input) == 0;
             return input && matchesQuery && input !== query[0];
           })
           .slice(0, config.suggestionsLimit).forEach(function(query) {
@@ -460,7 +479,8 @@
             } else if (qSplitPath[1]) {
               qSplitPath.shift();
               var path = qSplitPath.join(config.pathDelimiter).trim();
-              redirect = command.url + '/' + path;
+              var dash = command.dash || "/";
+              redirect = command.url + dash + path;
             } else {
               redirect = command.url;
             }
