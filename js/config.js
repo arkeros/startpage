@@ -39,6 +39,7 @@ var config = {
         { name: "Download", commands: [
             { key: 'a', name: 'Amazon', url: 'https://amazon.es', search: '/s/ref=nb_sb_noss?field-keywords=' },
             { key: 'T', name: 'The Pirate Bay', url: 'https://thepiratebay.se', search: '/search/' },
+            { key: 'detexify', name: 'Detexify', url: 'http://detexify.kirelabs.org', search: '/search/' },
 
         ] },
     ],
