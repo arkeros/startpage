@@ -1,30 +1,124 @@
 <!doctype html>
 
 <script>
+  const BANGS = new Map();
+
+  const googleMaps = {
+    name: 'Google Maps',
+    category: 'Search',
+    url: 'https://google.com/maps',
+    search:  '/maps/search/{}',
+    color: 'lightgreen',
+    logo: 'https://png.icons8.com/google-maps/color/1600',
+  };
+  BANGS.set('gm', googleMaps);
+  BANGS.set('map', googleMaps);
+  BANGS.set('maps', googleMaps);
+
+  const wikipedia = {
+    name: 'Wikipedia',
+    category: 'Study',
+    url: 'https://en.wikipedia.org',
+    search:  '/w/index.php?search={}',
+    color: '#ddd',
+    logo: 'https://upload.wikimedia.org/wikipedia/en/8/80/Wikipedia-logo-v2.svg',
+  };
+  BANGS.set('w', wikipedia);
+  BANGS.set('wiki', wikipedia);
+  BANGS.set('wikipedia', wikipedia);
+
+  const youtube = {
+    name: 'YouTube',
+    category: 'Watch',
+    url: 'https://youtube.com/feed/subscriptions',
+    search:  '/results?search_query={}',
+    color: '#cd201f',
+    logo: 'https://www.youtube.com/yt/about/media/images/brand-resources/logos/YouTube-logo-full_color_light.svg',
+  };
+  BANGS.set('y', youtube);
+  BANGS.set('yt', youtube);
+  BANGS.set('youtube', youtube);
+
+  const github = {
+    name: 'GitHub',
+    category: 'Develop',
+    url: 'https://github.com',
+    search:  '/search?q={}',
+    color: '#333',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg',
+  };
+  BANGS.set('g', github);
+  BANGS.set('gh', github);
+  BANGS.set('git', github);
+  BANGS.set('github', github);
+
+  const linkedIn = {
+    name: 'LinkedIn',
+    category: 'Work',
+    url: 'https://www.linkedin.com',
+    search:  null,
+    color: '#283e4a',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo.svg',
+  };
+  BANGS.set('l', linkedIn);
+  BANGS.set('li', linkedIn);
+  BANGS.set('linkedin', linkedIn);
+
+  const instagram = {
+    name: 'Instagram',
+    category: 'Lurk',
+    url: 'https://www.instagram.com',
+    search:  null,
+    color: '#833ab4',
+    logo: 'https://instagram-brand.com/wp-content/themes/ig-branding/assets/images/ig-logo-email.png',
+  };
+  BANGS.set('i', instagram);
+  BANGS.set('ig', instagram);
+  BANGS.set('instagram', instagram);
+
+  const facebook = {
+    name: 'Facebook',
+    category: 'Lurk',
+    url: 'https://www.facebook.com',
+    search:  '/search/top/?q={}',
+    color: '#3b5998',
+    logo: 'http://www.freeiconspng.com/uploads/images-facebook-f-logo-png-transparent-background-page-2-29.png',
+  };
+  BANGS.set('f', facebook);
+  BANGS.set('fb', facebook);
+  BANGS.set('facebook', facebook);
+      
+
+  function bangs2commands(bangs) {
+    const commands = [];
+    bangs.forEach((bang, key) => {
+      const { category, name, url, color, logo, search } = bang;
+      const command = [category, name, key, url, search, color, logo];
+      commands.push(command);
+    });
+    return commands;
+  }
+
+
   const CONFIG = {
 
     // the category, name, key, url, search path and color for your commands
     // if none of the specified keys are matched, the '*' key is used
     commands: [
       [null, 'Google', '*', 'https://encrypted.google.com', '/search?q={}', '#111'],
-      ['Work', 'LinkedIn', 'l', 'https://www.linkedin.com/', null, '#283e4a', 'https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo.svg'],
       // ['Work', 'Analytics', 'a', 'https://analytics.google.com', null, '#ff6d00'],
       // ['Work', 'Inbox', 'I', 'https://inbox.google.com', '/search/{}', '#4285f4'],
       // ['Work', 'Keep', 'k', 'https://keep.google.com', '/#search/text={}', '#fb0'],
       ['Work', 'PixelCanvas', 'pc', 'http://pixelcanvas.io', null, '#fb0', 'http://pixelcanvas.io/tile.png'],
       ['Study', 'Universitad de Barcelona', 'ub', 'https://mat.ub.edu', '/#search/text={}', '#0071cd', 'http://www.eh.ub.edu/img/ub-theme/images/logo_ub_negre.png'],
       ['Study', 'WolframAlpha', 'wa', 'https://www.wolframalpha.com', '/input/?i={}', '#ff9339', 'https://logos-download.com/wp-content/uploads/2016/12/WolframAlpha_logo_symbol_wordmark_Wolfram_Alpha.png'],
-      ['Study', 'Wikipedia', 'w', 'https://en.wikipedia.org', '/w/index.php?search={}', '#ddd', 'https://upload.wikimedia.org/wikipedia/en/8/80/Wikipedia-logo-v2.svg'],
       ['Translate', 'Real Academia Española', 'rae', 'http://dle.rae.es', '/?w={}', '#0E2752', 'http://dle.rae.es/images/250x172xLRAEn.png.pagespeed.ic.XugkQDPFIj.png'],
-      ['Develop', 'GitHub', 'g', 'https://github.com', '/search?q={}', '#333', 'https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg'],
       ['Develop', 'StackOverflow', 'so', 'https://stackoverflow.com', '/search?q={}', '#333', 'https://cdn.sstatic.net/Sites/stackoverflow/company/img/logos/so/so-logo.svg?v=2bb144720a66'],
       ['Develop', 'Mozilla Developer Network', 'mdn', 'https://developer.mozilla.org/en-US/search?q=array', '/search?q={}', '#000', 'https://mdn.mozillademos.org/files/6457/mdn_logo_only_color.png'],
       ['Develop', 'Node.js', 'node', 'https://nodejs.org/api/index.html', null, '#43853d', 'https://nodejs.org/static/images/logos/nodejs-new-pantone-white.png'],
       ['Develop', 'npm', 'npm', 'https://www.npmjs.com', '/search?q={}', '#C12127', 'https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg'],
       ['Develop', 'Python', 'py', 'https://docs.python.org', '/3/search.html?q={}', '#fb0', 'https://www.python.org/static/community_logos/python-logo-generic.svg'],
       ['Develop', 'Julia', 'jl', 'https://docs.julialang.org', '/en/stable/search/?q={}', '#9558b2', 'https://upload.wikimedia.org/wikipedia/commons/6/69/Julia_prog_language.svg'],
-      ['Lurk', 'Facebook', 'f', 'https://www.facebook.com', '/search/top/?q={}', '#3b5998', 'http://www.freeiconspng.com/uploads/images-facebook-f-logo-png-transparent-background-page-2-29.png'],
-      ['Lurk', 'Instagram', 'i', 'https://www.instagram.com', null, '#833ab4', 'https://instagram-brand.com/wp-content/themes/ig-branding/assets/images/ig-logo-email.png'],
       ['Lurk', 'Twitter', 't', 'https://twitter.com', '/search?q={}', '#1da1f2', 'http://www.macdrifter.com/theme/images/twitter-snow.svg'],
       ['Lurk', 'Reddit', 'r', 'https://www.reddit.com', '/search?q={}', '#5f99cf', 'https://upload.wikimedia.org/wikipedia/en/8/82/Reddit_logo_and_wordmark.svg'],
       ['Lurk', 'Menéame', 'm', 'https://www.meneame.net', '/search?q={}', '#e35614', 'https://novobrief.com/wp-content/uploads/2016/01/meneame-logo.png'],
@@ -35,9 +129,8 @@
       // ['Listen', 'SoundCloud', 's', 'https://soundcloud.com/discover', '/search?q={}', '#ff8800'],
       // ['Watch', 'Academy', 'A', 'https://www.khanacademy.org/', '/search?page_search_query={}', '#9cb443'],
       ['Watch', 'IMDb', 'imdb', 'https://www.imdb.com', '/find?q={}', '#575757', 'http://ia.media-imdb.com/images/M/MV5BMTk3ODA4Mjc0NF5BMl5BcG5nXkFtZTgwNDc1MzQ2OTE@._V1_.png'],
-      ['Watch', 'YouTube', 'y', 'https://youtube.com/feed/subscriptions', '/results?search_query={}', '#cd201f', 'https://www.youtube.com/yt/about/media/images/brand-resources/logos/YouTube-logo-full_color_light.svg'],
       ['Watch', 'Netflix', 'n', 'https://www.netflix.com/browse', '/search?q={}', '#000', 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg'],
-      ['Watch', 'Amazon Video', 'av', 'https://www.primevideo.com/', '/search?q={}', '#222', 'http://static.tvgcdn.net/extimg/ovg_source_logos/source_aiv.svg'],
+      ['Watch', 'Amazon Video', 'av', 'https://www.primevideo.com', '/search?q={}', '#222', 'http://static.tvgcdn.net/extimg/ovg_source_logos/source_aiv.svg'],
       // ['Watch', 'Twitch', 'T', 'https://www.twitch.tv/directory/following', null, '#6441a5'],
       // ['Download', '7digital', '7', 'https://us.7digital.com', '/search?q={}', '#07606e'],
       // ['Download', 'Sky Torrents', 'S', 'https://skytorrents.in', '/search/all/ed/1?q={}', '#00d1b2'],
@@ -47,11 +140,10 @@
       ['Calc', 'Random', 'rand', 'https://random.org', '/search?q={}', '#ddd', 'http://userlogos.org/files/logos/Mafia_Penguin/Random.png'],
       ['Buy', 'Amazon', 'a', 'https://amazon.es', '/s/?field-keywords={}', '#f90', 'https://i.pinimg.com/originals/95/98/b4/9598b485d75c30986078655d68259c62.png'],
       ['Search', 'Google Images', 'gi', 'https://google.es', '/search?q={}&tbm=isch', '#292929', 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'],
-      ['Search', 'Google Maps', 'maps', 'https://google.com/maps', '/maps/search/{}', 'lightgreen', 'https://png.icons8.com/google-maps/color/1600'],
-      ['Search', 'Google Maps', 'gm', 'https://google.com/maps', '/maps/search/{}', 'lightgreen', 'https://png.icons8.com/google-maps/color/1600'],
       ['Talk', 'Telegram', 'tg', 'https://web.telegram.org', null, '#5682a3', 'https://telegram.org/img/t_logo.png'],
       ['Talk', 'Discord', 'd', 'https://discordapp.com', null, '#7289da', 'https://p6.zdassets.com/hc/theme_assets/678183/200061268/logo_discord_menu.svg'],
       ['Talk', 'Slack', 's', 'https://slack.com', null, '#4C9689', 'https://brandfolder.com/slack/logo/slack-primary-logo.png'],
+      ...bangs2commands(BANGS),
     ],
 
     // give suggestions as you type
@@ -77,6 +169,7 @@
       'r': ['r/r/unixporn', 'r/r/startpages', 'r/r/webdev', 'r/r/technology', 'r/r/portland'],
       's': ['s/you/likes', 's/discover/the-upload'],
       'rand': ['rand/integers', 'rand/sequences', 'rand/passwords', 'rand/bytes'],
+      'm': ['m/queue', 'm/queue?meta=_popular', 'm/popular'],
     },
 
     // instantly redirect when a key is matched
@@ -373,7 +466,7 @@
 </div>
 
 <form class="overlay center" id="search-form" autocomplete="off" spellcheck="false">
-    <img id="search-logo" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" style="position: fixed;padding-bottom: 400px;" height="188">
+    <img id="search-logo" src style="position: fixed;padding-bottom: 400px;" height="188">
   <div>
     <input id="search-input" type="text">
     <ul id="search-suggestions"></ul>
