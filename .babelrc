@@ -1,0 +1,23 @@
+{
+    "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ],
+        "stage-2",
+        "react"
+      ],
+      "plugins": ["transform-flow-strip-types"],
+      "ignore": [
+        "/node_modules/",
+        "/build/chunks/",
+        "/build/public/",
+        "/build/updates/",
+        "/build/server.js"
+      ]
+}
+  

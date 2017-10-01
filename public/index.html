@@ -3,42 +3,6 @@
 <script>
   const BANGS = new Map();
 
-  const googleMaps = {
-    name: 'Google Maps',
-    category: 'Search',
-    url: 'https://google.com/maps',
-    search:  '/maps/search/{}',
-    color: 'lightgreen',
-    logo: 'https://png.icons8.com/google-maps/color/1600',
-  };
-  BANGS.set('gm', googleMaps);
-  BANGS.set('map', googleMaps);
-  BANGS.set('maps', googleMaps);
-
-  const wikipedia = {
-    name: 'Wikipedia',
-    category: 'Study',
-    url: 'https://en.wikipedia.org',
-    search:  '/w/index.php?search={}',
-    color: '#ddd',
-    logo: 'https://upload.wikimedia.org/wikipedia/en/8/80/Wikipedia-logo-v2.svg',
-  };
-  BANGS.set('w', wikipedia);
-  BANGS.set('wiki', wikipedia);
-  BANGS.set('wikipedia', wikipedia);
-
-  const youtube = {
-    name: 'YouTube',
-    category: 'Watch',
-    url: 'https://youtube.com/feed/subscriptions',
-    search:  '/results?search_query={}',
-    color: '#cd201f',
-    logo: 'https://www.youtube.com/yt/about/media/images/brand-resources/logos/YouTube-logo-full_color_light.svg',
-  };
-  BANGS.set('y', youtube);
-  BANGS.set('yt', youtube);
-  BANGS.set('youtube', youtube);
-
   const github = {
     name: 'GitHub',
     category: 'Develop',
@@ -75,19 +39,6 @@
   BANGS.set('i', instagram);
   BANGS.set('ig', instagram);
   BANGS.set('instagram', instagram);
-
-  const facebook = {
-    name: 'Facebook',
-    category: 'Lurk',
-    url: 'https://www.facebook.com',
-    search:  '/search/top/?q={}',
-    color: '#3b5998',
-    logo: 'http://www.freeiconspng.com/uploads/images-facebook-f-logo-png-transparent-background-page-2-29.png',
-  };
-  BANGS.set('f', facebook);
-  BANGS.set('fb', facebook);
-  BANGS.set('facebook', facebook);
-      
 
   function bangs2commands(bangs) {
     const commands = [];
