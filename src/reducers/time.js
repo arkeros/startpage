@@ -19,24 +19,32 @@
  * @flow
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
-import {
-  initTimer,
- } from './actions';
-import store from './store';
-import App from './components/App';
+import type { Action } from '../actions/types';
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementsByTagName('body')[0],
-  );
+export type TimeState = {
+  now: Date,
+};
 
-  store.dispatch(initTimer());
-});
+const initialState: TimeState = {
+  now: new Date(),
+};
+
+export default function user(
+  state: TimeState = initialState,
+  action: Action,
+): TimeState {
+  switch (action.type) {
+
+    case 'SET_CLOCK': {
+      const { now } = action;
+      return {
+        ...state,
+        now,
+      };
+    }
+
+    default:
+      return state;
+  }
+}

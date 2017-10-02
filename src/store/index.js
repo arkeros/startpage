@@ -16,27 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with Startpage tilde.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @flow
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
-import {
-  initTimer,
- } from './actions';
-import store from './store';
-import App from './components/App';
+import configureStore from './configureStore';
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementsByTagName('body')[0],
-  );
+const store = configureStore();
 
-  store.dispatch(initTimer());
-});
+export default store;

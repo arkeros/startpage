@@ -16,27 +16,28 @@
  * You should have received a copy of the GNU General Public License
  * along with Startpage tilde.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @flow
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 
-import {
-  initTimer,
- } from './actions';
-import store from './store';
-import App from './components/App';
+import Clock from './Clock';
+
+const centerStyles = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+  boxSizing: 'border-box',
+};
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementsByTagName('body')[0],
-  );
+function App() {
+  return (
+    <div style={centerStyles}>
+      <Clock />
+    </div>
+  )
+}
 
-  store.dispatch(initTimer());
-});
+export default App;

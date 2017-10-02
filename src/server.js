@@ -20,7 +20,12 @@
 
 import path from 'path';
 import express from 'express';
+import React from 'react';
+import ReactDOM from 'react-dom/server';
 
+import baseCss from './components/base.css';
+import Html from './components/Html';
+import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import { PORT } from './config';
 
 
@@ -29,6 +34,28 @@ const app = express();
 if (__DEV__) {
   app.enable('trust proxy');
 }
+
+const data = {
+  title: '~',
+  description: 'arkeros startpage (tilde fork)',
+  scripts: [
+    assets.vendor.js,
+    assets.client.js,
+  ],
+  styles: [
+    { id: 'css', cssText: baseCss },
+  ],
+  code: '',
+};
+const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
+const index = `<!doctype html>${html}`;
+
+//
+// Register server-side rendering middleware
+// -----------------------------------------------------------------------------
+app.get('*', async (req, res, next) => {
+  res.send(index);
+});
 
 //
 // Launch the server

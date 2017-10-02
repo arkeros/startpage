@@ -16,27 +16,42 @@
  * You should have received a copy of the GNU General Public License
  * along with Startpage tilde.  If not, see <http://www.gnu.org/licenses/>.
  *
- * @flow
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import type {
+  Action,
+  ThunkAction,
+  PromiseAction,
+} from './types';
 
-import {
-  initTimer,
- } from './actions';
-import store from './store';
-import App from './components/App';
+const CLOCK_FREQUENCY = 1000; // ms
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementsByTagName('body')[0],
-  );
+function setClock(now): Action {
+  return {
+    type: 'SET_CLOCK',
+    now,
+  };
+}
 
-  store.dispatch(initTimer());
-});
+function getPendingActions(state): Array<Action> {
+  const actions = [];
+
+  // TODO more logic
+  const now = new Date();
+  actions.push(setClock(now));
+
+  return actions;
+}
+
+export function initTimer(): ThunkAction {
+  return (dispatch, getState) => {
+    function tick() {
+      const state = getState();
+      const actions = getPendingActions(state);
+      dispatch(actions);
+    }
+
+    setInterval(tick, CLOCK_FREQUENCY);
+  };
+}

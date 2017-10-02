@@ -19,24 +19,17 @@
  * @flow
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { combineReducers } from 'redux';
 
-import {
-  initTimer,
- } from './actions';
-import store from './store';
-import App from './components/App';
+import time from './time';
+
+import type { TimeState } from './time';
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementsByTagName('body')[0],
-  );
+export type State = {
+  time: TimeState,
+};
 
-  store.dispatch(initTimer());
+export default combineReducers({
+  time,
 });

@@ -20,23 +20,30 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 
-import {
-  initTimer,
- } from './actions';
-import store from './store';
-import App from './components/App';
+import type { State } from '../reducers';
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementsByTagName('body')[0],
+const styles = {
+  display: 'block',
+  marginTop: '.06em',
+  fontSize: '6rem',
+  letterSpacing: '.05em',
+  cursor: 'pointer',
+};
+
+function Clock({ hh, mm }) {
+  return (
+    <time style={styles}>{hh} {mm}</time>
   );
+}
 
-  store.dispatch(initTimer());
-});
+function mapStateToProps(state: State) {
+  const { now } = state.time;
+  const hh = now.getHours();
+  const mm = now.getMinutes();
+  return { hh, mm };
+}
+
+export default connect(mapStateToProps)(Clock);

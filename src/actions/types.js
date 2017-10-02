@@ -19,24 +19,17 @@
  * @flow
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-
-import {
-  initTimer,
- } from './actions';
-import store from './store';
-import App from './components/App';
+import type { State } from '../reducers';
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementsByTagName('body')[0],
-  );
+export type Action =
+    { type: 'LOGGED_OUT' }
+  // TODO
+  | { type: 'SET_CLOCK', now: Date }
+  ;
 
-  store.dispatch(initTimer());
-});
+
+export type PromiseAction = Promise<Action>;
+export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
+export type GetState = () => State;
+export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
