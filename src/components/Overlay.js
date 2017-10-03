@@ -20,26 +20,26 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
-
-import type { State } from '../reducers';
 
 
-function pad(n: number): string {
- return n.toString().padStart(2, '0');
-}
+const styles = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  overflow: 'auto',
+  boxSizing: 'border-box',
+  width: '100%',
+  height: '100%',
+  visibility: 'hidden',
+};
 
-function Clock({ h, m, style }) {
+function Overlay({ style, children }) {
   return (
-    <time style={style}>{pad(h)} {pad(m)}</time>
-  );
+    <div style={{ ...styles, ...style }}>
+      {children}
+    </div>
+  )
 }
 
-function mapStateToProps(state: State) {
-  const { now } = state.time;
-  const h = now.getHours();
-  const m = now.getMinutes();
-  return { h, m };
-}
+export default Overlay;
 
-export default connect(mapStateToProps)(Clock);

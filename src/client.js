@@ -25,9 +25,28 @@ import { Provider } from 'react-redux';
 
 import {
   initTimer,
+  addChar,
  } from './actions';
 import store from './store';
 import App from './components/App';
+
+
+function handleKeyPress(event: KeyboardEvent) {
+  console.log('handleKeyPress');
+  // input.trigger(event);
+  // input.value = 's';
+  // const e = new KeyboardEvent('keydown');
+  // input.dispatchEvent(event);
+  const input = document.getElementsByTagName('input')[0];
+  if (input === document.activeElement) {
+
+  } else {
+    console.log('onfocused inpu!');
+    store.dispatch(addChar('a'));
+  }
+}
+
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,4 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 
   store.dispatch(initTimer());
+
+  window.addEventListener('keydown', handleKeyPress, false);
 });

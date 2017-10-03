@@ -23,8 +23,7 @@ import type { State } from '../reducers';
 
 
 export type Action =
-    { type: 'LOGGED_OUT' }
-  // TODO
+    { type: 'SET_TEXT', text: string }
   | { type: 'SET_CLOCK', now: Date }
   ;
 

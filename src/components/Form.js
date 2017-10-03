@@ -16,48 +16,81 @@
  * You should have received a copy of the GNU General Public License
  * along with Startpage tilde.  If not, see <http://www.gnu.org/licenses/>.
  *
+ * @flow
  */
 
 import React from 'react';
 import { connect } from 'react-redux';
 
-import type { State } from '../reducers';
-import Clock from './Clock';
-import Form from './Form';
-import { toggleGrid } from '../actions';
+import Overlay from './Overlay';
+import { setText } from '../actions';
 
 
-const centerStyles = {
+const styles = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  overflow: 'auto',
+  boxSizing: 'border-box',
+  width: '100%',
+  height: '100%',
+  visibility: 'hidden',
+
+  // center
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
   height: '100%',
   boxSizing: 'border-box',
-};
 
-const clockStyles = {
-  display: 'block',
-  marginTop: '.06em',
-  fontSize: '6rem',
+  //form
+  padding: '1em',
+  background: '#111',
+  transition: 'background-color .5s',
+  boxSizing: 'border-box',
+  zIndex: 2,
+}
+
+const inputStyles = {
+  fontSize: '3em',
+  width: '100%',
+  marginBottom: 20,
+  // fontSize: '1.5em',
+  fontWeight: 900,
   letterSpacing: '.05em',
-  cursor: 'pointer',
+  textTransform: 'uppercase',
 };
 
 
-function App({ visibility }) {
+function Form({ style, text, handleChange }) {
   return (
-    <div style={centerStyles}>
-      <Clock style={clockStyles} />
-      <Form style={{ visibility }} />
-    </div>
+    <Overlay style={{ ...styles, ...style }}>
+      <input
+        style={inputStyles}
+        type="text"
+        name="q"
+        value={text}
+        onChange={handleChange}
+        autoComplete="off"
+        autoFocus
+      />
+    </Overlay>
   )
 }
 
+// TODO simplify...
 function mapStateToProps(state: State) {
   const { text } = state.input;
-  const visibility = 'visiblity';
-  return { visibility };
+  return { text };
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+  return {
+    handleChange(event) {
+      dispatch(setText(event.target.value));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

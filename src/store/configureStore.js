@@ -53,7 +53,7 @@ export default function configureStore(onComplete: ?() => void) {
   persistStore(store, {
     storage: localForage,
     // TODO
-    blacklist: ['time'],
+    blacklist: ['time', 'input'],
   }, onComplete);
   if (isDebuggingInChrome) {
     window.store = store;

@@ -26,11 +26,29 @@ import type {
 
 const CLOCK_FREQUENCY = 1000; // ms
 
-
-function setClock(now): Action {
+function setClock(now: Date): Action {
   return {
     type: 'SET_CLOCK',
     now,
+  };
+}
+
+export function setText(text: string): Action {
+  return {
+    type: 'SET_TEXT',
+    text,
+  };
+}
+
+export function addChar(char: string): ThunkAction {
+  const input = document.getElementsByTagName('input')[0];
+  input.focus();
+  return (dispatch, getState) => {
+    const state = getState();
+    const { text } = state.input;
+    const newText = text + char;
+    dispatch(setText(newText));
+    input.focus();
   };
 }
 

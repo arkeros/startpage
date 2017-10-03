@@ -21,15 +21,19 @@
 
 import { combineReducers } from 'redux';
 
+import input from './input';
 import time from './time';
 
+import type { InputState } from './input';
 import type { TimeState } from './time';
 
 
 export type State = {
+  input: InputState,
   time: TimeState,
 };
 
 export default combineReducers({
+  input,
   time,
 });

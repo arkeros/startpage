@@ -19,27 +19,32 @@
  * @flow
  */
 
-import React from 'react';
-import { connect } from 'react-redux';
-
-import type { State } from '../reducers';
+import type { Action } from '../actions/types';
 
 
-function pad(n: number): string {
- return n.toString().padStart(2, '0');
+export type InputState = {
+  text: string,
+};
+
+const initialState: InputState = {
+  text: '',
+};
+
+export default function user(
+  state: InputState = initialState,
+  action: Action,
+): InputState {
+  switch (action.type) {
+
+    case 'SET_TEXT': {
+      const { text } = action;
+      return {
+        ...state,
+        text,
+      };
+    }
+
+    default:
+      return state;
+  }
 }
-
-function Clock({ h, m, style }) {
-  return (
-    <time style={style}>{pad(h)} {pad(m)}</time>
-  );
-}
-
-function mapStateToProps(state: State) {
-  const { now } = state.time;
-  const h = now.getHours();
-  const m = now.getMinutes();
-  return { h, m };
-}
-
-export default connect(mapStateToProps)(Clock);
