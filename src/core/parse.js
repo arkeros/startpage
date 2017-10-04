@@ -22,16 +22,81 @@
 const protocolRegex = /^[a-zA-Z]+:\/\//i;
 const urlRegex = /^((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)$/i;
 
+const bangs = new Map();
+
+const github = 'https://github.com';
+const meneame = 'https://www.meneame.net';
+const reddit = 'https://www.reddit.com';
+const twitter = 'https://twitter.com';
+
+const bangsList = [
+  github,
+  meneame,
+  reddit,
+  twitter,
+];
+bangs.set('g', github);
+bangs.set('gh', github);
+bangs.set('git', github);
+bangs.set('github', github);
+bangs.set('m', meneame);
+bangs.set('meneame', meneame);
+bangs.set('r', reddit);
+bangs.set('reddit', reddit);
+bangs.set('t', twitter);
+bangs.set('twitter', twitter);
+bangs.set('*', 'https://encrypted.google.com');
+
 /**
  * Given an input text, returns the corresponding redirected url.
  */
 export default function parse(text: string, options): string {
-  const { defaultSearch } = options;
+  const {
+    searchDelimiter,
+    pathDelimiter,
+   } = options;
 
   if (text.match(urlRegex)) {
     const hasProtocol = text.match(protocolRegex);
     return hasProtocol ? text : 'http://' + text;
   } else {
-    return defaultSearch + encodeURIComponent(text);
+    let key;
+    let mode = 'default';
+    let redirect;
+    let [searchKey, searchQuery] = text.split(searchDelimiter);
+    const [pathKey, ...path] = text.split(pathDelimiter);
+    console.log();
+    if (bangs.has(text)) {
+      key = text;
+    }
+    else if (bangs.has(searchKey)) {
+      mode = 'search';
+      key = searchKey;
+    }
+    else if (bangs.has(pathKey)) {
+      mode = 'path';
+      key = pathKey;
+    } else {
+      // default
+      mode = 'search';
+      key = '*';
+      searchQuery = text;
+    }
+
+    const bang = bangs.get(key);
+    switch(mode) {
+      case 'search':
+        redirect = `${bang}/search?q=${encodeURIComponent(searchQuery)}`;
+        break;
+      case 'path':
+        redirect = `${bang}/${path.join('/')}`;
+        break;
+      case 'default':
+      default:
+        redirect = bang;
+        break;
+    }
+
+    return { bang, key, redirect, mode };
   }
 }

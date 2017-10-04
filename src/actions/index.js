@@ -47,10 +47,12 @@ export function submit(): ThunkAction {
   return (dispatch, getState) => {
     const state = getState();
     const { text } = state.input;
-    const { defaultSearch } = state.settings;
+    const { searchDelimiter, pathDelimiter } = state.settings;
 
-    const redirect = parse(text, {
-      defaultSearch,
+    const { redirect } = parse(text, {
+      // defaultSearch,
+      searchDelimiter,
+      pathDelimiter,
     });
     dispatch(clearInput());
     dispatch(execute(redirect));

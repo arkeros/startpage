@@ -24,12 +24,16 @@ import type { Action } from '../actions/types';
 
 export type SettingsState = {
   newTab: boolean,
-  defaultSearch: string,
+  // defaultSearch: string,
+  searchDelimiter: string,
+  pathDelimiter: string,
 };
 
 const initialState: SettingsState = {
   newTab: true,
-  defaultSearch: 'https://encrypted.google.com/search?q=',
+  // defaultSearch: 'https://encrypted.google.com/search?q=',
+  searchDelimiter: '?',
+  pathDelimiter: '/',
 };
 
 
