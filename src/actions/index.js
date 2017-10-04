@@ -24,6 +24,8 @@ import type {
   PromiseAction,
 } from './types';
 
+import parse from '../core/parse';
+
 
 const CLOCK_FREQUENCY = 1000; // ms
 
@@ -47,7 +49,9 @@ export function submit(): ThunkAction {
     const { text } = state.input;
     const { defaultSearch } = state.settings;
 
-    const redirect = defaultSearch + encodeURIComponent(text);
+    const redirect = parse(text, {
+      defaultSearch,
+    });
     dispatch(clearInput());
     dispatch(execute(redirect));
   };
