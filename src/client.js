@@ -42,7 +42,8 @@ function handleKeyPress(event: KeyboardEvent) {
 
   } else {
     console.log('onfocused inpu!');
-    store.dispatch(addChar('a'));
+    // TODO
+    store.dispatch(addChar(''));
   }
 }
 

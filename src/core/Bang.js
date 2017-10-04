@@ -19,33 +19,11 @@
  * @flow
  */
 
-import type { Action } from '../actions/types';
+function Bang() {
 
-
-export type InputState = {
-  text: string,
-};
-
-const initialState: InputState = {
-  text: '',
-};
-
-
-export default function user(
-  state: InputState = initialState,
-  action: Action,
-): InputState {
-  switch (action.type) {
-
-    case 'SET_TEXT': {
-      const { text } = action;
-      return {
-        ...state,
-        text,
-      };
-    }
-
-    default:
-      return state;
-  }
 }
+Bang.prototype = {
+
+};
+
+export default Bang;

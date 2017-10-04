@@ -22,28 +22,22 @@
 import type { Action } from '../actions/types';
 
 
-export type InputState = {
-  text: string,
+export type SettingsState = {
+  newTab: boolean,
+  defaultSearch: string,
 };
 
-const initialState: InputState = {
-  text: '',
+const initialState: SettingsState = {
+  newTab: true,
+  defaultSearch: 'https://encrypted.google.com/search?q=',
 };
 
 
 export default function user(
-  state: InputState = initialState,
+  state: SettingsState = initialState,
   action: Action,
-): InputState {
+): SettingsState {
   switch (action.type) {
-
-    case 'SET_TEXT': {
-      const { text } = action;
-      return {
-        ...state,
-        text,
-      };
-    }
 
     default:
       return state;

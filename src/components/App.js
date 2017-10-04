@@ -22,19 +22,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import type { State } from '../reducers';
+import Overlay from './Overlay';
 import Clock from './Clock';
 import Form from './Form';
 import { toggleGrid } from '../actions';
 
 
-const centerStyles = {
+const styles = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  overflow: 'auto',
+  boxSizing: 'border-box',
+  width: '100%',
+  height: '100%',
+  visibility: 'visible',
+  flexDirection: 'column',
+
+  // center
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
   height: '100%',
   boxSizing: 'border-box',
-};
+
+  //form
+  padding: '1em',
+  transition: 'background-color .5s',
+  boxSizing: 'border-box',
+}
 
 const clockStyles = {
   display: 'block',
@@ -45,19 +62,28 @@ const clockStyles = {
 };
 
 
-function App({ visibility }) {
+function App({ mode }) {
+  const backgroundColor = (mode === 'input') ? '#111' : 'white';
   return (
-    <div style={centerStyles}>
-      <Clock style={clockStyles} />
-      <Form style={{ visibility }} />
-    </div>
+    <Overlay style={{
+      ...styles,
+      backgroundColor,
+    }}>
+      <Clock style={{
+        ...clockStyles,
+        display: (mode === 'clock') ? 'block' : 'none',
+      }} />
+      <Form  style={{
+        width: '100%',
+      }}/>
+    </Overlay>
   )
 }
 
 function mapStateToProps(state: State) {
   const { text } = state.input;
-  const visibility = 'visiblity';
-  return { visibility };
+  const mode = (text) ? 'input' : 'clock';
+  return { mode };
 }
 
 export default connect(mapStateToProps)(App);

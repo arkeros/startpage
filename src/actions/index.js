@@ -24,7 +24,34 @@ import type {
   PromiseAction,
 } from './types';
 
+
 const CLOCK_FREQUENCY = 1000; // ms
+
+export function execute(redirect) : ThunkAction {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { newTab } = state.settings;
+    // TODO
+    // Suggestions.add(query);
+    // Suggestions.show('');
+
+
+    if (newTab) window.open(redirect, '_blank');
+    else window.location.href = redirect;
+  };
+}
+
+export function submit(): ThunkAction {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { text } = state.input;
+    const { defaultSearch } = state.settings;
+
+    const redirect = defaultSearch + encodeURIComponent(text);
+    dispatch(clearInput());
+    dispatch(execute(redirect));
+  };
+}
 
 function setClock(now: Date): Action {
   return {
@@ -50,6 +77,10 @@ export function addChar(char: string): ThunkAction {
     dispatch(setText(newText));
     input.focus();
   };
+}
+
+export function clearInput(): Action {
+  return setText('');
 }
 
 function getPendingActions(state): Array<Action> {

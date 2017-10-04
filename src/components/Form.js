@@ -22,35 +22,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Overlay from './Overlay';
-import { setText } from '../actions';
+import { setText, submit } from '../actions';
 
-
-const styles = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  overflow: 'auto',
-  boxSizing: 'border-box',
-  width: '100%',
-  height: '100%',
-  visibility: 'hidden',
-
-  // center
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  height: '100%',
-  boxSizing: 'border-box',
-
-  //form
-  padding: '1em',
-  background: '#111',
-  transition: 'background-color .5s',
-  boxSizing: 'border-box',
-  zIndex: 2,
-}
 
 const inputStyles = {
   fontSize: '3em',
@@ -63,9 +36,9 @@ const inputStyles = {
 };
 
 
-function Form({ style, text, handleChange }) {
+function Form({ style, text, handleChange, handleSubmit }) {
   return (
-    <Overlay style={{ ...styles, ...style }}>
+    <form style={style} onSubmit={handleSubmit}>
       <input
         style={inputStyles}
         type="text"
@@ -75,7 +48,7 @@ function Form({ style, text, handleChange }) {
         autoComplete="off"
         autoFocus
       />
-    </Overlay>
+    </form >
   )
 }
 
@@ -89,6 +62,10 @@ function mapDispatchToProps(dispatch) {
   return {
     handleChange(event) {
       dispatch(setText(event.target.value));
+    },
+    handleSubmit(event) {
+      if (event) event.preventDefault();
+      dispatch(submit());
     },
   };
 }

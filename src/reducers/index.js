@@ -22,18 +22,22 @@
 import { combineReducers } from 'redux';
 
 import input from './input';
+import settings from './settings';
 import time from './time';
 
 import type { InputState } from './input';
+import type { SettingsState } from './settings';
 import type { TimeState } from './time';
 
 
 export type State = {
   input: InputState,
+  settings: SettingsState,
   time: TimeState,
 };
 
 export default combineReducers({
   input,
+  settings,
   time,
 });
