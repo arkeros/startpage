@@ -42,4 +42,3 @@ function Overlay({ style, children }) {
 }
 
 export default Overlay;
-
