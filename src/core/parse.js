@@ -19,33 +19,11 @@
  * @flow
  */
 
+import bangs from '../data/bangs';
+
 const protocolRegex = /^[a-zA-Z]+:\/\//i;
 const urlRegex = /^((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)$/i;
 
-const bangs = new Map();
-
-const github = 'https://github.com';
-const meneame = 'https://www.meneame.net';
-const reddit = 'https://www.reddit.com';
-const twitter = 'https://twitter.com';
-
-const bangsList = [
-  github,
-  meneame,
-  reddit,
-  twitter,
-];
-bangs.set('g', github);
-bangs.set('gh', github);
-bangs.set('git', github);
-bangs.set('github', github);
-bangs.set('m', meneame);
-bangs.set('meneame', meneame);
-bangs.set('r', reddit);
-bangs.set('reddit', reddit);
-bangs.set('t', twitter);
-bangs.set('twitter', twitter);
-bangs.set('*', 'https://encrypted.google.com');
 
 /**
  * Given an input text, returns the corresponding redirected url.
@@ -54,18 +32,23 @@ export default function parse(text: string, options): string {
   const {
     searchDelimiter,
     pathDelimiter,
-   } = options;
+  } = options;
+  let bang;
+  let redirect;
+  let mode;
+  let key;
 
   if (text.match(urlRegex)) {
     const hasProtocol = text.match(protocolRegex);
-    return hasProtocol ? text : 'http://' + text;
+    mode = 'url';
+    redirect = hasProtocol ? text : 'http://' + text;
+    const { hostname } = new URL(redirect);
+    bang = bangsByHostname.get(hostname);
   } else {
-    let key;
-    let mode = 'default';
-    let redirect;
+    mode = 'default';
     let [searchKey, searchQuery] = text.split(searchDelimiter);
     const [pathKey, ...path] = text.split(pathDelimiter);
-    console.log();
+
     if (bangs.has(text)) {
       key = text;
     }
@@ -83,20 +66,21 @@ export default function parse(text: string, options): string {
       searchQuery = text;
     }
 
-    const bang = bangs.get(key);
+    bang = bangs.get(key);
     switch(mode) {
       case 'search':
-        redirect = `${bang}/search?q=${encodeURIComponent(searchQuery)}`;
+        const query = encodeURIComponent(searchQuery);
+        redirect = `${bang.url}${bang.search.replace('{}', query)}`;
         break;
       case 'path':
-        redirect = `${bang}/${path.join('/')}`;
+        redirect = `${bang.url}/${path.join('/')}`;
         break;
       case 'default':
       default:
-        redirect = bang;
+        redirect = bang.url;
         break;
     }
-
-    return { bang, key, redirect, mode };
   }
+
+  return { bang, key, redirect, mode };
 }

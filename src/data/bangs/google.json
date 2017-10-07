@@ -1,0 +1,8 @@
+{
+  "name": "Google",
+  "category": "Search",
+  "url": "https://encrypted.google.com",
+  "search":  "/search?q={}",
+  "color": "#111",
+  "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1000px-Google_2015_logo.svg.png"
+}

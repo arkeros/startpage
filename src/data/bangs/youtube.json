@@ -1,7 +1,7 @@
 {
     "name": "YouTube",
     "category": "Watch",
-    "url": "https://youtube.com/feed/subscriptions",
+    "url": "https://youtube.com",
     "search":  "/results?search_query={}",
     "color": "#cd201f",
     "logo": "https://www.youtube.com/yt/about/media/images/brand-resources/logos/YouTube-logo-full_color_light.svg"

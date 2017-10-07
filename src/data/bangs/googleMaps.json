@@ -2,7 +2,7 @@
   "name": "Google Maps",
   "category": "Search",
   "url": "https://google.com/maps",
-  "search":  "/maps/search/{}",
+  "search":  "/search/{}",
   "color": "lightgreen",
   "logo": "https://png.icons8.com/google-maps/color/1600"
 }

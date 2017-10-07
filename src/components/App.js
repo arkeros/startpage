@@ -22,6 +22,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import type { State } from '../reducers';
+import { getColor } from '../utils/url';
 import Overlay from './Overlay';
 import Clock from './Clock';
 import Form from './Form';
@@ -62,8 +63,7 @@ const clockStyles = {
 };
 
 
-function App({ mode }) {
-  const backgroundColor = (mode === 'input') ? '#111' : 'white';
+function App({ mode, backgroundColor }) {
   return (
     <Overlay style={{
       ...styles,
@@ -81,9 +81,10 @@ function App({ mode }) {
 }
 
 function mapStateToProps(state: State) {
-  const { text } = state.input;
+  const { text, redirect } = state.input;
   const mode = (text) ? 'input' : 'clock';
-  return { mode };
+  const backgroundColor = (mode === 'input') ? getColor(redirect) : 'white';
+  return { mode, backgroundColor };
 }
 
 export default connect(mapStateToProps)(App);

@@ -19,36 +19,30 @@
  * @flow
  */
 
-import type { Action } from '../actions/types';
-import parse from '../core/parse';
+import { bangsByHostname } from '../data/bangs';
 
-export type InputState = {
-  text: string,
-  redirect: string,
-};
+// TODO
+const DEFAULT_COLOR = 'pink';
 
-const initialState: InputState = {
-  text: '',
-  redirect: '',
-};
+export function getBang(url: string): Bang {
+  const { hostname } = new URL(url);
+  const bang = bangsByHostname.get(hostname);
+  return bang;
+}
 
+export function getColor(url: string): string {
+  const bang = getBang(url);
+    // TODO DRY
+  if (!bang) return DEFAULT_COLOR;
+  return bang.color || DEFAULT_COLOR;
+}
 
-export default function user(
-  state: InputState = initialState,
-  action: Action,
-): InputState {
-  switch (action.type) {
-
-    case 'SET_TEXT': {
-      const { text, redirect } = action;
-      return {
-        ...state,
-        text,
-        redirect,
-      };
-    }
-
-    default:
-      return state;
-  }
+export function getLogo(url: string): string {
+  // TODO
+  if (!url.length) return '';
+  const { hostname } = new URL(url);
+  const bang = bangsByHostname.get(hostname);
+  // TODO DRY
+  if (!bang) return `http://${hostname}/favicon.ico`;
+  return bang.logo || `http://${hostname}/favicon.ico`;
 }
