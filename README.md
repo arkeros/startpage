@@ -3,6 +3,7 @@
 Inspired by [/r/startpages](https://www.reddit.com/r/startpages)—the idea is to have a homepage for your browser that is functional and sexy.
 
 ![Screenshot](SCREENSHOT.png?raw=true "Screenshot")
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Farkeros%2Fstartpage.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Farkeros%2Fstartpage?ref=badge_shield)
 
 ## Usage
 
@@ -42,3 +43,6 @@ The above is just the beginning. Open up the [index.html](index.html) file and r
 ## License
 
 Feel free to use this and modify it however you like.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Farkeros%2Fstartpage.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Farkeros%2Fstartpage?ref=badge_large)
