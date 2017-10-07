@@ -1,0 +1,8 @@
+{
+  "name": "WolframAlpha",
+  "category": "Study",
+  "url": "https://www.wolframalpha.com",
+  "search":  "/input/?i={}",
+  "color": "#ff9339",
+  "logo": "https://logos-download.com/wp-content/uploads/2016/12/WolframAlpha_logo_symbol_wordmark_Wolfram_Alpha.png"
+}

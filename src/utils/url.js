@@ -24,8 +24,13 @@ import { bangsByHostname } from '../data/bangs';
 // TODO
 const DEFAULT_COLOR = 'pink';
 
-export function getBang(url: string): Bang {
+export function getHostname(url: string): string {
   const { hostname } = new URL(url);
+  return hostname;
+}
+
+export function getBang(url: string): Bang {
+  const hostname = getHostname(url);
   const bang = bangsByHostname.get(hostname);
   return bang;
 }
@@ -40,7 +45,7 @@ export function getColor(url: string): string {
 export function getLogo(url: string): string {
   // TODO
   if (!url.length) return '';
-  const { hostname } = new URL(url);
+  const hostname = getHostname(url);
   const bang = bangsByHostname.get(hostname);
   // TODO DRY
   if (!bang) return `http://${hostname}/favicon.ico`;

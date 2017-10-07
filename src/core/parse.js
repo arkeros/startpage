@@ -19,7 +19,8 @@
  * @flow
  */
 
-import bangs from '../data/bangs';
+import bangs, { bangsByHostname } from '../data/bangs';
+import { getHostname } from '../utils/url';
 
 const protocolRegex = /^[a-zA-Z]+:\/\//i;
 const urlRegex = /^((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)$/i;
@@ -42,7 +43,7 @@ export default function parse(text: string, options): string {
     const hasProtocol = text.match(protocolRegex);
     mode = 'url';
     redirect = hasProtocol ? text : 'http://' + text;
-    const { hostname } = new URL(redirect);
+    const hostname = getHostname(redirect);
     bang = bangsByHostname.get(hostname);
   } else {
     mode = 'default';

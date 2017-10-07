@@ -1,0 +1,8 @@
+{
+    "name": "StackOverflow",
+    "category": "Study",
+    "url": "https://stackoverflow.com",
+    "search":  "/search?q={}",
+    "color": "#333",
+    "logo": "https://cdn.sstatic.net/Sites/stackoverflow/company/img/logos/so/so-logo.svg?v=2bb144720a66"
+}
