@@ -18,8 +18,10 @@
  *
  */
 
+import amazon from './amazonVideo';
 import amazonVideo from './amazonVideo';
 import bitbucket from './bitbucket';
+import discord from './discord';
 import facebook from './facebook';
 import forocoches from './forocoches';
 import github from './github';
@@ -35,8 +37,11 @@ import nodeJs from './nodeJs';
 import npm from './npm';
 import python from './python';
 import rae from './rae';
+import random from './random';
 import reddit from './reddit';
+import slack from './slack';
 import stackOverflow from './stackOverflow';
+import telegram from './telegram';
 import twitter from './twitter';
 import wikipedia from './wikipedia';
 import wolframAlpha from './wolframAlpha';
@@ -73,11 +78,17 @@ const BANGS = new Map();
 
 BANGS.set('*', google);
 
+BANGS.set('a', amazon);
+BANGS.set('amazon', amazon);
+
 BANGS.set('av', amazonVideo);
 
 BANGS.set('b', bitbucket);
 BANGS.set('bb', bitbucket);
 BANGS.set('bitbucket', bitbucket);
+
+BANGS.set('d', discord);
+BANGS.set('discord', discord);
 
 BANGS.set('f', facebook);
 BANGS.set('fb', facebook);
@@ -125,11 +136,20 @@ BANGS.set('python', python);
 
 BANGS.set('rae', rae);
 
+BANGS.set('rand', random);
+BANGS.set('random', random);
+
 BANGS.set('r', reddit);
 BANGS.set('reddit', reddit);
 
+BANGS.set('s', slack);
+BANGS.set('slack', slack);
+
 BANGS.set('so', stackOverflow);
 BANGS.set('stackoverflow', stackOverflow);
+
+BANGS.set('tg', telegram);
+BANGS.set('telegram', telegram);
 
 BANGS.set('t', twitter);
 BANGS.set('twitter', twitter);
@@ -160,8 +180,10 @@ export default BANGS;
  */
 
 export const bangsList = [
+  amazon,
   amazonVideo,
   bitbucket,
+  discord,
   facebook,
   forocoches,
   github,
@@ -176,9 +198,12 @@ export const bangsList = [
   nodeJs,
   npm,
   rae,
+  random,
   reddit,
   python,
+  slack,
   stackOverflow,
+  telegram,
   twitter,
   wikipedia,
   wolframAlpha,
