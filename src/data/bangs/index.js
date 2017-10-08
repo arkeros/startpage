@@ -148,6 +148,17 @@ BANGS.set('youtube', youtube);
 
 export default BANGS;
 
+/**
+ * ['Buy', 'Amazon', 'a', 'https://amazon.es', '/s/?field-keywords={}', '#f90', 'https://i.pinimg.com/originals/95/98/b4/9598b485d75c30986078655d68259c62.png'],
+      ['Search', 'Google Maps', 'maps', 'https://google.com/maps', '/maps/search/{}', 'lightgreen', 'https://png.icons8.com/google-maps/color/1600'],
+      ['Search', 'Google Maps', 'gm', 'https://google.com/maps', '/maps/search/{}', 'lightgreen', 'https://png.icons8.com/google-maps/color/1600'],
+      ['Talk', 'Telegram', 'tg', 'https://web.telegram.org', null, '#5682a3', 'https://telegram.org/img/t_logo.png'],
+      ['Talk', 'Discord', 'd', 'https://discordapp.com', null, '#7289da', 'https://p6.zdassets.com/hc/theme_assets/678183/200061268/logo_discord_menu.svg'],
+      ['Talk', 'Slack', 's', 'https://slack.com', null, '#4C9689', 'https://brandfolder.com/slack/logo/slack-primary-logo.png'],
+      ['Calc', 'Random', 'rand', 'https://random.org', '/search?q={}', '#ddd', 'http://userlogos.org/files/logos/Mafia_Penguin/Random.png'],
+
+ */
+
 export const bangsList = [
   amazonVideo,
   bitbucket,

@@ -41,10 +41,17 @@ const inputStyles = {
 };
 
 
-function Form({ style, text, logo, handleChange, handleSubmit }) {
+function Form({ style, text, hidden, logo, handleChange, handleSubmit }) {
   return (
     <form style={{ textAlign: 'center', ...style }} onSubmit={handleSubmit}>
-      <img src={logo} height={188} style={logostyles} />
+      <img
+        src={logo}
+        height={188}
+        style={{
+          ...logostyles,
+          visibility: (hidden) ? 'collapse' : 'visible',
+        }}
+      />
       <input
         style={inputStyles}
         type="text"

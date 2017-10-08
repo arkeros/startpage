@@ -73,9 +73,10 @@ function App({ mode, backgroundColor }) {
         ...clockStyles,
         display: (mode === 'clock') ? 'block' : 'none',
       }} />
-      <Form  style={{
-        width: '100%',
-      }}/>
+      <Form
+        style={{ width: '100%' }}
+        hidden={mode !== 'input'}
+      />
     </Overlay>
   )
 }
