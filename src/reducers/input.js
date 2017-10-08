@@ -20,14 +20,16 @@
  */
 
 import type { Action } from '../actions/types';
-
+import parse from '../core/parse';
 
 export type InputState = {
   text: string,
+  redirect: string,
 };
 
 const initialState: InputState = {
   text: '',
+  redirect: '',
 };
 
 
@@ -38,10 +40,11 @@ export default function user(
   switch (action.type) {
 
     case 'SET_TEXT': {
-      const { text } = action;
+      const { text, redirect } = action;
       return {
         ...state,
         text,
+        redirect,
       };
     }
 

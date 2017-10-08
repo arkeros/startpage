@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Startpage tilde.  If not, see <http://www.gnu.org/licenses/>.
  *
+ * @flow
  */
 
 import type {
@@ -23,6 +24,8 @@ import type {
   ThunkAction,
   PromiseAction,
 } from './types';
+
+import parse from '../core/parse';
 
 
 const CLOCK_FREQUENCY = 1000; // ms
@@ -44,10 +47,7 @@ export function execute(redirect) : ThunkAction {
 export function submit(): ThunkAction {
   return (dispatch, getState) => {
     const state = getState();
-    const { text } = state.input;
-    const { defaultSearch } = state.settings;
-
-    const redirect = defaultSearch + encodeURIComponent(text);
+    const { redirect } = state.input;
     dispatch(clearInput());
     dispatch(execute(redirect));
   };
@@ -60,10 +60,21 @@ function setClock(now: Date): Action {
   };
 }
 
-export function setText(text: string): Action {
-  return {
-    type: 'SET_TEXT',
-    text,
+export function setText(text: string): ThunkAction {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { searchDelimiter, pathDelimiter } = state.settings;
+
+    const { redirect } = parse(text, {
+      // defaultSearch,
+      searchDelimiter,
+      pathDelimiter,
+    });
+    dispatch({
+      type: 'SET_TEXT',
+      text,
+      redirect,
+    });
   };
 }
 

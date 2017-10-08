@@ -1,0 +1,8 @@
+{
+  "name": "Google Images",
+  "category": "Search",
+  "url": "https://google.es",
+  "search":  "/search?q={}&tbm=isch",
+  "color": "#292929",
+  "logo": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+}

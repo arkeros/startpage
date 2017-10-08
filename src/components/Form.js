@@ -23,7 +23,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { setText, submit } from '../actions';
+import { getLogo } from '../utils/url';
 
+
+const logostyles = {
+  paddingBottom: 42,
+};
 
 const inputStyles = {
   fontSize: '3em',
@@ -36,9 +41,17 @@ const inputStyles = {
 };
 
 
-function Form({ style, text, handleChange, handleSubmit }) {
+function Form({ style, text, hidden, logo, handleChange, handleSubmit }) {
   return (
-    <form style={style} onSubmit={handleSubmit}>
+    <form style={{ textAlign: 'center', ...style }} onSubmit={handleSubmit}>
+      <img
+        src={logo}
+        height={188}
+        style={{
+          ...logostyles,
+          visibility: (hidden) ? 'collapse' : 'visible',
+        }}
+      />
       <input
         style={inputStyles}
         type="text"
@@ -54,8 +67,9 @@ function Form({ style, text, handleChange, handleSubmit }) {
 
 // TODO simplify...
 function mapStateToProps(state: State) {
-  const { text } = state.input;
-  return { text };
+  const { text, redirect } = state.input;
+  const logo = getLogo(redirect);
+  return { text, logo };
 }
 
 function mapDispatchToProps(dispatch) {

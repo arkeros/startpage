@@ -32,7 +32,7 @@ import App from './components/App';
 
 
 function handleKeyPress(event: KeyboardEvent) {
-  console.log('handleKeyPress');
+  // console.log('handleKeyPress');
   // input.trigger(event);
   // input.value = 's';
   // const e = new KeyboardEvent('keydown');
